@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 application = Flask(__name__)
-application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:senha1994@127.0.0.1/teste"
+application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@db/teste"
 db = SQLAlchemy(application)
 
 class Todo(db.Model):
@@ -96,4 +96,5 @@ def concluir():
     return 'Tarefa concluída com sucesso!'
 
 if __name__ == '__main__':
+    db.create_all()
     application.run(debug=True, host='0.0.0.0')
