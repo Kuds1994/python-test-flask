@@ -1,0 +1,22 @@
+.listar-usuarios{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+#cadastrar-link{
+    margin-top: 20px;
+}
+
+.sucesso{
+    color: green;
+}
+
+.falha{
+    color: red;
+}
+
+td, th{ 
+    vertical-align: middle;
+}
+
