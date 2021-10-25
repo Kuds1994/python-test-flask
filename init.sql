@@ -1,2 +1,0 @@
-CREATE DATABASE IF NOT EXISTS teste;
-use teste;

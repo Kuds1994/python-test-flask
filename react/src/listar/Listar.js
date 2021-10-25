@@ -1,50 +1,51 @@
 import {useState, useEffect} from "react"
 import {Link} from "react-router-dom";
-import Moment from 'moment';
 import { DateTime } from "luxon";
-import 'moment/locale/pt-br';
 
-import UsuariosDataServices from "../servicos/usuario.service";
+import TodoDataServices from "../servicos/todo.service";
 
 import './index.css'
 
 export default function Listar(){
 
-    const [usuarios, setUsuarios] = useState([]);  
-    const [lista, setLista] = useState([]); 
-    const TODOS = [
-        {id: 1, titulo: 'Todo 1', descricao: 'asdasdasdasdasd1', data_inicio: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'), feito: false, data_termino: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')},
-        {id: 2, titulo: 'Todo 2', descricao: 'asdasdasdasdasd2', data_inicio: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'), feito: false, data_termino: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')},
-        {id: 3, titulo: 'Todo 3', descricao: 'asdasdasdasdasd3', data_inicio: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss'), feito: false, data_termino: DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss')}
-    ];
-    const [todos, setTodos] = useState(TODOS); 
+    //Lista usada para guardar os dados que vem do banco de dados
+    const [todos, setTodos] = useState([]); 
+
+    //Variavel usada para fazer a busca dos Todos
+    const [busca, setBusca] = useState('');
     
     useEffect(() => { 
-        UsuariosDataServices.pegarTodos().then(response => {
-            setUsuarios(response.data.sort((a, b) => a.id - b.id))
-            setLista(response.data);
-        })        
+        TodoDataServices.pegarTodos().then(response => {
+            //Ordena os Todos por ordem do id
+            setTodos(response.data.sort((a, b) => a.id - b.id)) 
+        })      
     }, [])
 
-    const filtrar = (e) => {
-        if(e.length > 0){
-            setTodos(TODOS.filter(u => u.titulo.includes(e) || u.descricao.includes(e)))  
-        }else{
-            setTodos(TODOS)
-        }        
+    //Metodo para excluir um todo da lista
+    const deletar = (id) => {
+        TodoDataServices.deletarTodo(id).then(() => {
+            setTodos(todos.filter(u => u.id !== id))
+        })
     }
 
-    const deletar = (id) => {
-        UsuariosDataServices.deletar(id).then(() => {
-            setTodos(usuarios.filter(u => u.id !== id))
+    const concluir = (id) => {
+        TodoDataServices.concluirTodo(id).then(() => {
+            const a = todos.map(todo => {
+                if(todo.id == id){
+                    todo.feito = true
+                }
+
+                return todo
+            })
+            setTodos(a)
         })
     }
 
     return (
-       <div className="listar-usuarios">
+       <div className="listar-todos">
            <h2>Lista de Terefas</h2>
            <div className="form-group">                 
-                <input id="nome-tarefa" placeholder="Buscar tarefa"  name="nome-tarefa" onChange={e => filtrar(e.target.value)} className="form-control" type="text"/>
+                <input id="nome-tarefa" placeholder="Buscar tarefa"  name="nome-tarefa" onChange={e => setBusca(e.target.value)} className="form-control" type="text"/>
             </div>
            {
                todos.length > 0 ? 
@@ -62,15 +63,19 @@ export default function Listar(){
                 </thead>
                 <tbody>
                     {
-                        todos.map((usu) =>   
-                            <tr key={usu.id}>                      
-                                <th scope="row"> {usu.id} </th>
-                                <td> {usu.titulo} </td>
-                                <td> {usu.descricao.length < 20 ? usu.descricao : usu.descricao.slice(0, 20) + '...'} </td>
-                                <td> {usu.data_inicio} </td> 
-                                <td> {usu.data_termino} </td> 
-                                {usu.feito ? <td className="sucesso">Feito</td> : <td className="falha">A concluir</td>}                                                                     
-                                <td><Link to={`/editar/${usu.id}`}id="editar-link" className="btn btn-primary">Editar</Link> <button type="button" onClick={(e) => {e.preventDefault(); deletar(usu.id)}} id="excluir-link" className="btn btn-danger">Excluir</button></td>                                                                      
+                        todos.filter(u => u.titulo.includes(busca) || u.descricao.includes(busca)).map((t) =>   
+                            <tr key={t.id}>                      
+                                <th scope="row"> {t.id} </th>
+                                <td> {t.titulo} </td>
+                                <td> {t.descricao.length < 20 ? t.descricao : t.descricao.slice(0, 20) + '...'} </td>
+                                <td> {DateTime.fromISO(t.data_inicio).toFormat('dd/MM/yyyy HH:mm:ss')} </td> 
+                                <td> {DateTime.fromISO(t.data_termino).toFormat('dd/MM/yyyy HH:mm:ss')} </td> 
+                                {t.feito ? <td className="sucesso">Feito</td> : <td className="falha">A concluir</td>}                                                                     
+                                <td>
+                                    {t.feito ? <span style={{padding: '0 47px'}}></span> : <button type="button" onClick={(e) => {e.preventDefault(); concluir(t.id)}} id="excluir-link" className="btn btn-success f">Concluir</button>}  
+                                    <Link to={`/editar/${t.id}`} id="editar-link" className="btn btn-primary f">Editar</Link> 
+                                    <button type="button" onClick={(e) => {e.preventDefault(); deletar(t.id)}} id="excluir-link" className="btn btn-danger">Excluir</button>
+                                </td>                                                                      
                             </tr>
                         )
                     }                   

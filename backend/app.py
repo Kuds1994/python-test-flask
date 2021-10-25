@@ -1,11 +1,11 @@
 from flask import Flask, abort, jsonify, request
-import datetime
+from flask_cors import CORS
+from datetime import datetime, tzinfo
 
-from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
 
-
 application = Flask(__name__)
+CORS(application)
 application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@db/teste"
 db = SQLAlchemy(application)
 
@@ -22,7 +22,7 @@ class Todo(db.Model):
         return 'Codigo ' % self.id
 
     def to_json(self):
-        todo = {'id': self.id, 'titulo': self.titulo, 'descricao': self.descricao, 'data_inicio': self.data_inicio, 'feito': bool(self.feito), 'data_termino': self.data_termino}
+        todo = {'id': self.id, 'titulo': self.titulo, 'descricao': self.descricao, 'data_inicio': self.data_inicio.isoformat() + 'Z', 'feito': bool(self.feito), 'data_termino': self.data_termino.isoformat() + 'Z'}
         return todo
 
 
@@ -31,34 +31,46 @@ class Todo(db.Model):
 def todos():
     if request.method == 'POST':
         data = request.json
-        ts = datetime.datetime.now()
-        novo_todo = Todo(titulo=data["titulo"], descricao=data["descricao"], data_inicio=ts, feito=False, data_termino=ts)
-        try:
-            db.session.add(novo_todo)
-            db.session.commit()
-            return 'Salvo com sucesso!'
-        except:
-            abort(403)
+
+        agora = datetime.today()
+
+        if agora < datetime.fromisoformat(data["data_termino"]):
+            novo_todo = Todo(titulo=data["titulo"], descricao=data["descricao"], data_termino=data["data_termino"], data_inicio=agora.isoformat(), feito=False)
+            try:
+                db.session.add(novo_todo)
+                db.session.commit()
+                return 'Salvo com sucesso!'
+            except:
+                abort(403)
+
+        resposta = {'mensagem': 'Tempo de termino precisa ser maior que hoje'}
+        return jsonify(resposta), 400
 
     elif request.method == 'PUT':
 
-        id = request.args['id']
-        
-        todo = Todo.query.filter_by(id=id).first_or_404()
-
         data = request.json
-     
-        if data.get('titulo') is not None:
-            todo.titulo = data["titulo"]
 
-        if data.get('descricao') is not None:
-            todo.descricao = data["descricao"]
-
-        if data.get('feito') is not None:
-            todo.feito = data["feito"]
+        agora = datetime.today()
         
-        db.session.commit()
-        return 'Atualizado com sucesso'
+        if agora < datetime.fromisoformat(data["data_termino"].replace('Z','')):
+       
+            id = request.args['id']      
+            todo = Todo.query.filter_by(id=id).first_or_404()       
+        
+            if data.get('titulo') is not None:
+                todo.titulo = data["titulo"]
+
+            if data.get('descricao') is not None:
+                todo.descricao = data["descricao"]
+
+            if data.get('feito') is not None:
+                todo.feito = data["feito"]
+            
+            db.session.commit()
+            return 'Atualizado com sucesso'
+
+        resposta = {'mensagem': 'Tempo de termino precisa ser maior que hoje'}
+        return jsonify(resposta), 400    
 
     elif request.method == 'DELETE':
         id = request.args['id']

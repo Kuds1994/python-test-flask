@@ -1,4 +1,4 @@
-.listar-usuarios{
+.listar-todos{
     display: flex;
     flex-direction: column;
     margin-top: 50px;
@@ -18,5 +18,9 @@
 
 td, th{ 
     vertical-align: middle;
+}
+
+.f{
+    margin-right: 10px;
 }
 
