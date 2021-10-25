@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 application = Flask(__name__)
 CORS(application)
-application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@db/teste"
+application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:senha1994@localhost/teste"
 db = SQLAlchemy(application)
 
 class Todo(db.Model):
@@ -34,12 +34,30 @@ def todos():
 
         agora = datetime.today()
 
-        if agora < datetime.fromisoformat(data["data_termino"]):
+        if data.get('titulo') is None:
+            resposta = {'mensagem': 'Campo titulo precisa ser preenchido'}
+            return jsonify(resposta), 400    
+
+
+        if data.get('descricao') is None:
+            resposta = {'mensagem': 'Campo descricao precisa ser preenchido'}
+            return jsonify(resposta), 400
+            
+
+        if data.get('feito') is None:
+            resposta = {'mensagem': 'Campo feito precisa ser preenchido'}
+            return jsonify(resposta), 400
+        
+        if data.get('data_termino') is None:
+            resposta = {'mensagem': 'Campo data_termino precisa ser preenchido'}
+            return jsonify(resposta), 400
+
+        if agora < datetime.fromisoformat(data['data_termino']):
             novo_todo = Todo(titulo=data["titulo"], descricao=data["descricao"], data_termino=data["data_termino"], data_inicio=agora.isoformat(), feito=False)
             try:
                 db.session.add(novo_todo)
                 db.session.commit()
-                return 'Salvo com sucesso!'
+                return jsonify({'mensagem': 'Salvo com sucesso'}), 200
             except:
                 abort(403)
 
@@ -51,23 +69,38 @@ def todos():
         data = request.json
 
         agora = datetime.today()
+
+        if data.get('titulo') is None:
+            resposta = {'mensagem': 'Campo titulo precisa ser preenchido'}
+            return jsonify(resposta), 400    
+
+
+        if data.get('descricao') is None:
+            resposta = {'mensagem': 'Campo descricao precisa ser preenchido'}
+            return jsonify(resposta), 400
+            
+
+        if data.get('feito') is None:
+            resposta = {'mensagem': 'Campo feito precisa ser preenchido'}
+            return jsonify(resposta), 400
+
+        
+        if data.get('data_termino') is None:
+            resposta = {'mensagem': 'Campo data_termino precisa ser preenchido'}
+            return jsonify(resposta), 400
+            
         
         if agora < datetime.fromisoformat(data["data_termino"].replace('Z','')):
        
             id = request.args['id']      
             todo = Todo.query.filter_by(id=id).first_or_404()       
         
-            if data.get('titulo') is not None:
-                todo.titulo = data["titulo"]
-
-            if data.get('descricao') is not None:
-                todo.descricao = data["descricao"]
-
-            if data.get('feito') is not None:
-                todo.feito = data["feito"]
+            todo.titulo = data["titulo"]
+            todo.descricao = data["descricao"]
+            todo.feito = data["feito"]
             
             db.session.commit()
-            return 'Atualizado com sucesso'
+            return jsonify({'mensagem': 'Atualizado com sucesso'}), 200
 
         resposta = {'mensagem': 'Tempo de termino precisa ser maior que hoje'}
         return jsonify(resposta), 400    
@@ -105,7 +138,8 @@ def concluir():
 
     db.session.commit()
 
-    return 'Tarefa concluída com sucesso!'
+    resposta = {'mensagem': 'Todo concluido'}
+    return jsonify(resposta), 200
 
 if __name__ == '__main__':
     db.create_all()
