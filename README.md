@@ -74,6 +74,7 @@ Nesse endereço é possível:
 - Fazer chamadas de verbos HTTP para testar as endpoints disponíveis.
 - Ver uma breve descrição de como as endpoints funcionam e suas possíveis respostas.
 - Ver o modelo do objeto json que é usado tanto como resposta quanto como requisição.
-- 
+
+
 ## Agredecimentos
 Gostaria de agradecer a Eldorado pela oportunidade e qualquer dúvida sobre a execução do projeto ou instalação, estou a disposição para tentar resolver os problemas, sendo pelo email, telefone ou qualquer outro método de comunicação já fornecido anteriormente.
