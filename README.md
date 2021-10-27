@@ -2,9 +2,9 @@
     <img src="https://i.imgur.com/rSyq3MW.png" alt="Documentção"></a>
 </p>
 
-<h3 align="center">Gerenciador de Projetos Lorem Ipsum Inc.</h3>
+<h3 align="center">Gerenciador de Todos</h3>
 
-<h4 align="center">O projeto tem como o objetivo fazer o gerenciamento dos projetos, seus custos, o valor do investimento e ect.</h4>
+<h4 align="center">O projeto tem como o objetivo fazer o gerenciamento de todos, cadastrar um todo, o descrver um todo e ect.</h4>
 
 ## Tecnologias usadas no projeto
 
@@ -15,16 +15,19 @@
 - [React.js 17.0.2]
 - [Mysql 8.0.27]
 - [Docker]
+
 ## Métodos para intalação
 
 O projeto e divido em duas camadas: Frontend e Backend. Ambas passam por processos distintos de instalação.
 Para evitar a possível incompatibilidade entre os diversos tipos de tecnologias usadas no projeto, foi criado 2 formas para a instalação do projeto.
 Nesta branch será descrito o método para a instalação usando o docker. Para seguir o 2º método, é preciso clonar a branch "no-docker". 
+
 ## Atenção
 
 Para executar o projeto corretamente, e preciso instalar o node.js, mysql, docker e python.
 Criar uma virtual env para executar os comandos do python no método 2.
 Para a melhor reproduzação do projeto, abrir o frontend no google chrome.
+
 ## Instalação
 
 - Após clonar o repositório, abrir a pasta raiz do projeto, e executar o comando:
