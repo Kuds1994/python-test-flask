@@ -20,7 +20,7 @@
 
 O projeto e divido em duas camadas: Frontend e Backend. Ambas passam por processos distintos de instalação.
 Para evitar a possível incompatibilidade entre os diversos tipos de tecnologias usadas no projeto, foi criado 2 formas para a instalação do projeto.
-Nesta branch será descrito o método para a instalação sem usar o docker. Para seguir o 1º método, é preciso clonar a branch "masterr". 
+Nesta branch será descrito o método para a instalação sem usar o docker. Para seguir o 1º método, é preciso clonar a branch "master". 
 
 ## Atenção
 
