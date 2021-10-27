@@ -41,7 +41,7 @@ cd react
 - Com o node instalado, executar o seguinte comando na pasta "react": 
 
 ```bash
-npm install
+npm install --silent
 ``` 
 
 - Depois que as dependências forem instaladas, executar o seguinte comando, para executar o frontend.:
