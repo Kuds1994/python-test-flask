@@ -11,7 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 application = Flask(__name__)
 #Adiciona o CORS para aplicação, para poder aceitar requisições de outrar aplicações
 CORS(application)
-application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://<usuario_do_banco>:<senha_do_usuario>@localhost/test"
+application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://user:pass@db/teste"
 db = SQLAlchemy(application)
 
 # Classe com as propriedades que um todo vai ter
