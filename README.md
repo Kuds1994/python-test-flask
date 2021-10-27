@@ -30,13 +30,53 @@ Para a melhor reproduzação do projeto, abrir o frontend no google chrome.
 
 ## Instalação
 
-- Após clonar o repositório, abrir a pasta raiz do projeto, e executar o comando:
+** O segundo método precisa que todas as tecnologias mencionadas acima estejam instaladas no computador
+
+- Após clonar o repositório, abrir a pasta raiz do projeto, executar o seuinte comando no Prompt, para entrar na pasta do frontend:
+
 ```bash
-docker-compose up
+cd react
 ``` 
-- O processo irá demorar alguns minutos para instalar as ferramentas e dependências.
-- O docker irá instalar as dependências do banco(Mysql), backend(Python) e o frontend(Node/React)
-- O projeto irá executar no endereço "http://localhost:3000"
+
+- Com o node instalado, executar o seguinte comando na pasta "react": 
+
+```bash
+npm install
+``` 
+
+- Depois que as dependências forem instaladas, executar o seguinte comando, para executar o frontend.:
+
+```bash
+npm start
+``` 
+
+Após isso o frontend já estará sendo executado, agora é preciso instalar o backend.
+
+- Abrir um prompt na raiz do projeto e executar o comando "cd backend" para entrar na pasta do backend.
+
+- Com o python instalado, executar o seguinte comando, para instalar as dependências do python: 
+
+```bash
+pip install -r requirements.txt
+``` 
+
+- Abrir o arquivo app.py localizado em "backend", ir na linha 9 e substituir os campos:
+
+```python
+##<usuario_do_banco> = Usuario para acessar o banco
+##<senha_do_usuario> = Senha do usuario para acessar o banco
+"mysql+mysqlconnector://<usuario_do_banco>:<senha_do_usuario>@localhost/teste"
+```
+
+- Abrir o arquivo localizado na pasta "backend/scripts" chamado "init.sql" e executar o script no SGBD (Sistema Gerenciadador do Banco de Dados)
+
+- Após isso executar o seguinte comando, na pasta "backend", para executar o backend:
+
+```bash
+python app.py
+``` 
+
+- Após esse processo, abrir o google chrome no endereço "localhost:3000" ou no endereço indicado no prompt de comando do frontend.
 
 ## O Sistema
 
