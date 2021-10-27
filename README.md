@@ -42,6 +42,7 @@ docker-compose up
 
 O sistema consta com 3 telas: listagem de todos, cadastro de todos e descrição de um todo.
 A tela de cadastro possui os campos: título, descrição e a data de conclusão do todo.
+Para ver a descrição de um todo, basta clica no link que fica na descrição do todo.
 Todos os campos são obrigatórios.
 Na tela de listagem de todo, é possível buscar todos pelo nome ou descrição, editar um todo, concluir um todo e excluir um todo.
 Para buscar um todo pelo nome ou descrição, é só digitar o nome na busca.
