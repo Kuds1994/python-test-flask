@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as BrowserRouter, Switch, Route} from "react-router-dom";
 
 import Cadastro from './cadastrar/Cadastrar';
 import Listar from './listar/Listar';
@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <h1>TODO</h1>        
           <Switch>
@@ -23,7 +23,7 @@ function App() {
             </Route>
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

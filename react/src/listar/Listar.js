@@ -14,8 +14,8 @@ export default function Listar(){
     //Variavel usada para fazer a busca dos Todos
     const [busca, setBusca] = useState('');
     
-    useEffect(() => { 
-        TodoDataServices.pegarTodos().then(response => {
+    useEffect(async () => { 
+        await TodoDataServices.pegarTodos().then(response => {
             //Ordena os Todos por ordem do id
             setTodos(response.data.sort((a, b) => a.id - b.id)) 
         })      
@@ -27,7 +27,7 @@ export default function Listar(){
             setTodos(todos.filter(u => u.id !== id))
         })
     }
-
+    //Concluir um todo
     const concluir = (id) => {
         TodoDataServices.concluirTodo(id).then(() => {
             const a = todos.map(todo => {
@@ -63,8 +63,8 @@ export default function Listar(){
                 </thead>
                 <tbody>
                     {
-                        todos.filter(u => u.titulo.includes(busca) || u.descricao.includes(busca)).map((t) =>   
-                            <tr key={t.id}>                      
+                        todos.filter(u => u.titulo.toUpperCase().includes(busca.toUpperCase()) || u.descricao.includes(busca)).map((t) =>   
+                            <tr key={t.id} data-testid="lista-teste">                      
                                 <th scope="row"> {t.id} </th>
                                 <td> {t.titulo} </td>
                                 <td> {t.descricao.length < 20 ? t.descricao : t.descricao.slice(0, 20) + '...'} </td>

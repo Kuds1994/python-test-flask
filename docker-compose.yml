@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    build: ./
+    build: ./backend
     links:
       - db
     ports:
@@ -17,4 +17,13 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - './scripts:/docker-entrypoint-initdb.d'
+      - './backend/scripts:/docker-entrypoint-initdb.d'
+  node:
+    ports:
+      - '3000:3000'
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    volumes:
+      - './react:/app'
+      - '/app/node_modules'

@@ -21,9 +21,9 @@ export default function Cadastrar(){
 
     const mensagens = () => {
         if(mensagem.sucesso){
-            return <div className="alert alert-success" role="alert">{mensagem.texto}</div>
+            return <div className="alert alert-success" data-testid="mensagem" role="alert">{mensagem.texto}</div>
         }else{
-            return <div className="alert alert-danger" role="alert">{mensagem.texto}</div>
+            return <div className="alert alert-danger" data-testid="mensagem" role="alert">{mensagem.texto}</div>
         }
     }
 
@@ -44,18 +44,18 @@ export default function Cadastrar(){
     return (
        <div className="section-cadastro">
            <h2>Cadastro de Tarefa</h2>
-           <form className="cadastro-todos" onSubmit={salvar}>   
+           <form className="cadastro-todos" data-testid="form-cadastro" onSubmit={salvar}>   
            <div className="form-group">  
                     <label htmlFor="todo-titulo">Título</label> 
-                    <input id="todo-titulo" name="todo-titulo" onChange={e => setTodo({...todo, titulo: e.target.value})} className="form-control" type="text"/>
+                    <input id="todo-titulo" data-testid="cadastro-titulo" name="todo-titulo" onChange={e => setTodo({...todo, titulo: e.target.value})} className="form-control" type="text"/>
                 </div>
                 <div className="form-group"> 
                     <label htmlFor="todo-descricao">Descrição</label> 
-                    <textarea id="todo-descricao" name="todo-descricao" onChange={e => setTodo({...todo, descricao: e.target.value})} className="form-control" type="textarea" rows="5" cols="30"/>
+                    <textarea id="todo-descricao" data-testid="cadastro-descricao" name="todo-descricao" onChange={e => setTodo({...todo, descricao: e.target.value})} className="form-control" type="textarea" rows="5" cols="30"/>
                 </div>
                 <div className="form-group"> 
                     <label htmlFor="todo-datatermino">Data de Termino</label> 
-                    <input id="todo-datatermino" name="todo-datatermino" onChange={e => setTodo({...todo, data_termino: e.target.value})} className="form-control" type="datetime-local"/>
+                    <input id="todo-datatermino" data-testid="cadastro-datatermino" name="todo-datatermino" onChange={e => setTodo({...todo, data_termino: e.target.value})} className="form-control" type="datetime-local"/>
                 </div> 
                 <button id="cadastro-submit" className="btn btn-primary" type="submit">Cadastrar</button>
                 <Link to="/" id="voltar-link" className="btn btn-light" href="/cadastrar">Voltar</Link>

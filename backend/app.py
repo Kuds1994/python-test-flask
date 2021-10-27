@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 application = Flask(__name__)
 CORS(application)
-application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:senha1994@localhost/teste"
+application.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://user:pass@db/teste"
 db = SQLAlchemy(application)
 
 class Todo(db.Model):
