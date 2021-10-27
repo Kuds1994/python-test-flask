@@ -32,7 +32,7 @@ Para a melhor reproduzação do projeto, abrir o frontend no google chrome.
 
 ** O segundo método precisa que todas as tecnologias mencionadas acima estejam instaladas no computador
 
-- Após clonar o repositório, abrir a pasta raiz do projeto, executar o seuinte comando no Prompt, para entrar na pasta do frontend:
+- Após clonar o repositório, abrir a pasta raiz do projeto, executar o seguinte comando no Prompt, para entrar na pasta do frontend:
 
 ```bash
 cd react
