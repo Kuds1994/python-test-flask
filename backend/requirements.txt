@@ -1,3 +1,4 @@
+#Arquivo com as dependências do python, instalado quando se inicia o docker
 aniso8601==9.0.1
 atomicwrites==1.4.0
 attrs==21.2.0

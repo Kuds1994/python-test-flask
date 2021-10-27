@@ -6,6 +6,9 @@ import Listar from '../listar/Listar';
 import Cadastrar from '../cadastrar/Cadastrar';
 
 
+//Arquivo de testes do React, usando o Jest
+
+//Um teste para saber se não foi carregado nada na tela de lista todo
 describe("Testando a lista de todos", () => {
     it("Caso não tenha nada na tela, aparecer uma mensagem", () => {
         
@@ -17,6 +20,7 @@ describe("Testando a lista de todos", () => {
 })
 
 
+//Teste para salvar um todo
 describe("Salvar um todo", () => {
     it("Salva um todo", async () => {
         
