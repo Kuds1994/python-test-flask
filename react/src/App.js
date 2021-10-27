@@ -2,7 +2,8 @@ import { BrowserRouter as BrowserRouter, Switch, Route} from "react-router-dom";
 
 import Cadastro from './cadastrar/Cadastrar';
 import Listar from './listar/Listar';
-import Editar from './editar/Editar'
+import Editar from './editar/Editar';
+import PegarTodo from "./pegartodo/PegarTodo";
 
 import './App.css';
 
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route path="/editar/:id">
               <Editar/>
+            </Route>
+            <Route path="/buscarTodo/:id">
+              <PegarTodo/>
             </Route>
         </Switch>
       </div>
