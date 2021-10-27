@@ -180,25 +180,30 @@ class TodoDAO(Resource):
     def post(self):
         '''Cadastra um novo todo'''
 
+#Descreve as rotas que usam o id para retornar dados do todo
 @ns.param('id', 'Id do todo')
 @ns.response(404, 'Todo não encontrado')
 @ns.route("/?id=<int:id>")
 class TodoDAOWithParams(Resource):
     '''Endpoint para buscar um todo, atualizar um todo ou deletar todo'''
 
+    #Descreve a rota de atualizar um todo
     @ns.marshal_with(todo)
     @ns.expect(todo)
     def put(self):
         '''Atualiza um todo'''
-      
+    
+    #Descreve a rota para buscar um todo
     @ns.marshal_with(todo)
     def get(self):
         '''Busca um todo'''
 
+    #Descreve a rota para deletar um todo
     @ns.response(200, 'Todo deletado')
     def delete(self):
         '''Deleta um todo'''
 
+#Descreve a rota para concluir um todo
 @ns.param('id', 'Id do todo')
 @ns.response(404, 'Todo não encontrado')
 @ns.route("/concluir?id=<int:id>")

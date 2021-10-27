@@ -7,21 +7,24 @@ import './index.css';
 
 export default function Editar(){
 
+    //Busca na URL o parametro do ID
     const { id } = useParams();
 
+    //Inicia a variável do todo para atualizar
     const [todo, setTodo] = useState({
         titulo: '',
         descricao: '',
         data_termino:'',           
     })
 
+    //Variável usada para guardar as mensagens que vem do banco caso retorn algum erro
     const [mensagem, setMensagem] = useState({
         texto: '',
         sucesso: false,
         status: false,
     });
 
-
+    //Método usado para destinguir que tipo de mensagem exibir, dependendo do tipo de resposta retornada do banco após um solicitção
     const mensagens = () => {
         if(mensagem.sucesso){
             return <div className="alert alert-success" role="alert">{mensagem.texto}</div>
@@ -30,12 +33,15 @@ export default function Editar(){
         }
     }
 
+    //Métdo do próprio React que é disparado toda vez que a página e renderizada ou determinada variável muda de estado
     useEffect(() => { 
         TodoDataServices.getTodo(id).then(response => {
             setTodo(response.data)         
         })    
     }, [id])  
     
+
+    //Método usado para atualizar um todo no banco
     const salvar = (e) => {
         e.preventDefault(); 
 
@@ -48,6 +54,7 @@ export default function Editar(){
         });    
     }
 
+    //Parte do código HTML que é retornado para exibir na tela de cadastro
     return (
        <div className="section-cadastro">
            <h2>Editar Tarefa</h2>

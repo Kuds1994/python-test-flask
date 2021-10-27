@@ -6,19 +6,20 @@ import TodoDataServices from "../servicos/todo.service";
 import './index.css';
 
 export default function Cadastrar(){
-
+    //Inicia a variável do todo para cadastro
     const [todo, setTodo] = useState({
         titulo: '',
         descricao: '',
         data_termino:'',           
     })
-
+    //Variável usada para guardar as mensagens que vem do banco caso retorn algum erro
     const [mensagem, setMensagem] = useState({
         texto: '',
         sucesso: false,
         status: false,
     });
 
+    //Método usado para destinguir que tipo de mensagem exibir, dependendo do tipo de resposta retornada do banco após um solicitção
     const mensagens = () => {
         if(mensagem.sucesso){
             return <div className="alert alert-success" data-testid="mensagem" role="alert">{mensagem.texto}</div>
@@ -27,7 +28,7 @@ export default function Cadastrar(){
         }
     }
 
-
+    //Método usado para salvar um todo no banco
     const salvar = (e) => {
         e.preventDefault();
 
@@ -41,6 +42,7 @@ export default function Cadastrar(){
 
     }
 
+    //Parte do código HTML que é retornado para exibir na tela de cadastro
     return (
        <div className="section-cadastro">
            <h2>Cadastro de Tarefa</h2>
